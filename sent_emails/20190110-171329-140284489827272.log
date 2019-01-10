@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: test@gmail.com
+Date: Thu, 10 Jan 2019 17:13:29 -0000
+Message-ID: <154714040934.13995.5785749166940602619@stanley-VirtualBox>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/users/reset/Mg/52v-83710d7364c4c70d768c/
+
+Your username, in case you've forgotten: test
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

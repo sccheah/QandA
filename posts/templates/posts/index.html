@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block content %}
+{% if question_list %}
+	<ol>
+		{% for question in question_list %}
+			<li><a href="{% url 'posts:detail' question.id %}">{{ question.question_text }}</a></li>
+		{% endfor %}
+	</ol>
+{% else %}
+	<p>No questions are available</p>
+{% endif %}
+
+<a href="{% url 'posts:add_question' %}">Add a question</a>
+{% endblock %}

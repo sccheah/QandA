@@ -23,7 +23,11 @@
 {% if answers %}
 	<ol>
 		{% for answer in answers %}
-			<li>{{ answer.answer_text }} | Votes - {{ answer.votes }}</li>
+			{% if answer.author.username %}
+				<li>{{ answer.answer_text }} | Votes - {{ answer.votes }} by {{ answer.author.username }}</li>
+			{% else %}
+				<li>{{ answer.answer_text }} | Votes - {{ answer.votes }} by Anonymous</li>
+			{% endif %}
 		{% endfor %}
 	</ol>
 {% else %}

@@ -32,7 +32,7 @@ def save_question(request):
 def delete_question(request):
 	q = get_object_or_404(Question, pk=request.POST['question'])
 
-	if request.user.id == q.author.id:
+	if request.user.id == q.author.id and request.user.id != None:
 		q.delete()
 
 	return HttpResponseRedirect(reverse('posts:index'))

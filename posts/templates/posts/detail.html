@@ -6,7 +6,7 @@
 <h1>{{ question.question_text }}</h1>
 <h2>{{ question.detail_text }}</h2>
 
-{% if question.author.id == request.user.id %}
+{% if question.author.id == request.user.id and request.user.id != None %}
 <form action="{% url 'posts:delete_question' %}" method="post">
 {% csrf_token %}
 	<input type="hidden" name="question" value="{{ question.id }}">

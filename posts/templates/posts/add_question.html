@@ -4,4 +4,13 @@
 
 {% block content %}
 <h1>Add a question</h1>
+
+<form action="{% url 'posts:save_question' %}" method="post">
+{% csrf_token %}
+	Add Question: <input type="text" name="question">
+	<br>
+	Add Detail: <input type="text" name="detail">
+	<br>
+	<input type="submit" value="Submit">
+</form>
 {% endblock %}

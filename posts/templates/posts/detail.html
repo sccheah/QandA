@@ -5,6 +5,21 @@
 {% block content %}
 <h1>{{ question.question_text }}</h1>
 <h2>{{ question.detail_text }}</h2>
+
+{% if question.author.id == request.user.id %}
+<form action="{% url 'posts:delete_question' %}" method="post">
+{% csrf_token %}
+	<input type="hidden" name="question" value="{{ question.id }}">
+	<input type="submit" value="Delete Question">
+</form>
+{% endif %}
+
+{% if question.author %}
+	<p>Author: {{ question.author.username }}</p>
+{% else %}
+	<p>Author: Anonymous</p>
+{% endif %}
+
 {% if answers %}
 	<ol>
 		{% for answer in answers %}

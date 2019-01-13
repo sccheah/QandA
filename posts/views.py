@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
+from django.urls import reverse
 
 from .models import Question
 
@@ -15,3 +17,20 @@ def detail(request, post_id):
 
 def add_question(request):
 	return render(request, 'posts/add_question.html', {})
+
+def save_question(request):
+	q = Question(question_text=request.POST['question'], detail_text=request.POST['detail'], 
+			pub_date=timezone.now())
+	q.save()
+
+	if request.user.id:
+		request.user.question_set.add(q)
+		request.user.save()
+		
+	return HttpResponseRedirect(reverse('posts:detail', args=(q.id,)))
+
+def delete_question(request):
+	q = get_object_or_404(Question, pk=request.POST['question'])
+	q.delete()
+
+	return HttpResponseRedirect(reverse('posts:index'))

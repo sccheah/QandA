@@ -13,7 +13,6 @@ class SignUp(generic.CreateView):
 	template_name = 'signup.html'
 
 def profile(request, user_id):
-	print(user_id)
 	user = get_object_or_404(CustomUser, pk=user_id)
 	return render(request, 'users/profile.html', {
 		'user': user, 

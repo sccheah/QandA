@@ -15,7 +15,7 @@
 {% endif %}
 
 {% if question.author %}
-	<p>Author: {{ question.author.username }}</p>
+	<p>Author: <a href="{% url 'users:profile' question.author.id %}">{{ question.author.username }}</a></p>
 {% else %}
 	<p>Author: Anonymous</p>
 {% endif %}
@@ -25,7 +25,7 @@
 		{% for answer in answers %}
 			{% if answer.author.username %}
 				<li>
-					{{ answer.answer_text }} | by {{ answer.author.username }}
+					{{ answer.answer_text }} | by <a href="{% url 'users:profile' answer.author.id %}">{{ answer.author.username }}</a>
 					{% if request.user.id == answer.author.id and request.user.id != None %}
 						<form action="{% url 'posts:delete_answer' question.id %}" method="post">
 						{% csrf_token %}

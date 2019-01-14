@@ -42,7 +42,7 @@ def save_answer(request, post_id):
 	answer = Answer(question=q, answer_text=request.POST['answer'], votes=0)
 
 	if (request.user.id):
-		request.user.answer_set.add(answer)
+		answer.author = request.user
 
 	answer.save()
 	return HttpResponseRedirect(reverse('posts:detail', args=(post_id,)))

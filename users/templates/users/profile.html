@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>{{ user.username }}</h2>
+
+<h3>Questions:</h3>
+{% if questions %}
+<ol>
+	{% for question in questions %}
+		<li><a href="{% url 'posts:detail' question.id %}">{{ question.question_text }}</a></li>
+	{% endfor %}
+</ol>
+{% else %}
+<p>You have not posted any questions.</p>
+{% endif %}
+
+<h3>Answers</h3>
+{% if answers %}
+<ol>
+	{% for answer in answers %}
+		<li><a href="{% url 'posts:detail' answer.question.id%}">{{ answer.answer_text }}</a></li>
+	{% endfor %}
+</ol>
+{% else %}
+<p>You have not posted any answers.</p>
+{% endif %}
+
+{% endblock %}

@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.urls import reverse
 
-from .models import Question
+from .models import Question, Answer
 
 # Create your views here. Start off with function-based views then switch to CBV
 def index(request):
@@ -36,3 +36,19 @@ def delete_question(request):
 		q.delete()
 
 	return HttpResponseRedirect(reverse('posts:index'))
+
+def save_answer(request, post_id):
+	q = get_object_or_404(Question, pk=post_id)
+	answer = Answer(question=q, answer_text=request.POST['answer'], votes=0)
+
+	if (request.user.id):
+		request.user.answer_set.add(answer)
+
+	answer.save()
+	return HttpResponseRedirect(reverse('posts:detail', args=(post_id,)))
+
+def delete_answer(request, post_id):
+	answer = get_object_or_404(Answer, pk=request.POST['answer'])
+	answer.delete()
+
+	return HttpResponseRedirect(reverse('posts:detail', args=(post_id,)))

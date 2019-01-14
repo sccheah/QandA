@@ -24,15 +24,30 @@
 	<ol>
 		{% for answer in answers %}
 			{% if answer.author.username %}
-				<li>{{ answer.answer_text }} | Votes - {{ answer.votes }} by {{ answer.author.username }}</li>
+				<li>
+					{{ answer.answer_text }} | by {{ answer.author.username }}
+					{% if request.user.id == answer.author.id and request.user.id != None %}
+						<form action="{% url 'posts:delete_answer' question.id %}" method="post">
+						{% csrf_token %}
+							<input type="hidden" name="answer" value="{{ answer.id }}">
+							<input type="submit" value="Delete Answer">
+						</form>
+					{% endif %}
+				</li>
 			{% else %}
-				<li>{{ answer.answer_text }} | Votes - {{ answer.votes }} by Anonymous</li>
+				<li>{{ answer.answer_text }} | by Anonymous</li>
 			{% endif %}
 		{% endfor %}
 	</ol>
 {% else %}
 	<p>No answers are available</p>
 {% endif %}
+
+<form action="{% url 'posts:save_answer' question.id %}" method="post">
+{% csrf_token %}
+	Add answer: <input type="text" name="answer">
+	<input type="submit" value="Submit">
+</form>
 
 <a href="{% url 'posts:index' %}">Return to index</a>
 

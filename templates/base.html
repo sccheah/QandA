@@ -3,25 +3,27 @@
 <head>
 	<meta charset="utf-8">
 	<title>{% block title %}QandA{% endblock %}</title>
+	
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'QandA/base.css' %}">
 </head>
 <body>
 	<main>
-		<div>
+		<header>
 			{% if user.is_authenticated %}
-				Hi <a href="{% url 'users:profile' user.id %}">{{ user.username }}</a>!
-				<p><a href="{% url 'logout' %}">logout</a></p>
-				<p><a href="{% url 'password_change' %}">change password</a></p>
+				<p>Hi <a href="{% url 'users:profile' user.id %}">{{ user.username }}</a>!
+				 | <a href="{% url 'logout' %}">logout</a></p>
 			{% else %}
 				<a href="{% url 'login' %}">login</a> | 
 				<a href="{% url 'users:signup' %}"> signup</a> |
 				<a href="{% url 'password_reset' %}"> reset password</a>
 			{% endif %}
-		</div>
+		</header>
 		{% block content %}
 		{% endblock %}
-		<div>
+		<footer>
 			<a href="{% url 'posts:index' %}">Return to index</a>
-		</div>
+		</footer>
 	</main>
 </body>
 </html>

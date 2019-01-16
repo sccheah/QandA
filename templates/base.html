@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>{% block title %}QandA{% endblock %}</title>
-	
+
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'QandA/base.css' %}">
 </head>
@@ -19,6 +19,7 @@
 				<a href="{% url 'password_reset' %}"> reset password</a>
 			{% endif %}
 		</header>
+		<h1 class="project-title"><a href="{% url 'posts:index' %}">QandA</a></h1>
 		{% block content %}
 		{% endblock %}
 		<footer>

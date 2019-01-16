@@ -1,8 +1,23 @@
 header {
-	background-color: lightgreen;
+	background-color: lightblue;
 }
 
 footer {
-	background-color: lightgreen;
+	background-color: lightblue;
 }
 
+.project-title {
+	color: darkgreen;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:link {
+	color: black;
+}
+
+a:visited {
+	color: darkblue;
+}

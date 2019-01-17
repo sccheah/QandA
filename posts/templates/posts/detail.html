@@ -1,52 +1,61 @@
 {% extends 'base.html' %}
 
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'posts/style.css' %}">
+{% endblock %}
+
 {% block title %}{{ question }}{% endblock %}
 
 {% block content %}
-<h1>{{ question.question_text }}</h1>
-<h2>{{ question.detail_text }}</h2>
+<div class="question">
+	<h1>{{ question.question_text }}</h1>
+	<h2>{{ question.detail_text }}</h2>
 
-{% if question.author.id == request.user.id and request.user.id != None %}
-<form action="{% url 'posts:delete_question' %}" method="post">
-{% csrf_token %}
-	<input type="hidden" name="question" value="{{ question.id }}">
-	<input type="submit" value="Delete Question">
-</form>
-{% endif %}
+	{% if question.author.id == request.user.id and request.user.id != None %}
+	<form action="{% url 'posts:delete_question' %}" method="post">
+	{% csrf_token %}
+		<input type="hidden" name="question" value="{{ question.id }}">
+		<input type="submit" value="Delete Question">
+	</form>
+	{% endif %}
 
-{% if question.author %}
-	<p>Author: <a href="{% url 'users:profile' question.author.id %}">{{ question.author.username }}</a></p>
-{% else %}
-	<p>Author: Anonymous</p>
-{% endif %}
+	{% if question.author %}
+		<p>Author: <a href="{% url 'users:profile' question.author.id %}">{{ question.author.username }}</a></p>
+	{% else %}
+		<p>Author: Anonymous</p>
+	{% endif %}
+</div>
 
-{% if answers %}
-	<ol>
-		{% for answer in answers %}
-			{% if answer.author.username %}
-				<li>
-					{{ answer.answer_text }} | by <a href="{% url 'users:profile' answer.author.id %}">{{ answer.author.username }}</a>
-					{% if request.user.id == answer.author.id and request.user.id != None %}
-						<form action="{% url 'posts:delete_answer' question.id %}" method="post">
-						{% csrf_token %}
-							<input type="hidden" name="answer" value="{{ answer.id }}">
-							<input type="submit" value="Delete Answer">
-						</form>
-					{% endif %}
-				</li>
-			{% else %}
-				<li>{{ answer.answer_text }} | by Anonymous</li>
-			{% endif %}
-		{% endfor %}
-	</ol>
-{% else %}
-	<p>No answers are available</p>
-{% endif %}
+<div class="answer">
+	{% if answers %}
+		<ol>
+			{% for answer in answers %}
+				{% if answer.author.username %}
+					<li>
+						{{ answer.answer_text }} | by <a href="{% url 'users:profile' answer.author.id %}">{{ answer.author.username }}</a>
+						{% if request.user.id == answer.author.id and request.user.id != None %}
+							<form action="{% url 'posts:delete_answer' question.id %}" method="post">
+							{% csrf_token %}
+								<input type="hidden" name="answer" value="{{ answer.id }}">
+								<input type="submit" value="Delete Answer">
+							</form>
+						{% endif %}
+					</li>
+				{% else %}
+					<li>{{ answer.answer_text }} | by Anonymous</li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+	{% else %}
+		<p>No answers are available</p>
+	{% endif %}
 
-<form action="{% url 'posts:save_answer' question.id %}" method="post">
-{% csrf_token %}
-	Add answer: <input type="text" name="answer">
-	<input type="submit" value="Submit">
-</form>
+	<form action="{% url 'posts:save_answer' question.id %}" method="post">
+	{% csrf_token %}
+		Add answer: <input type="text" name="answer">
+		<input type="submit" value="Submit">
+	</form>
+</div>
 
 {% endblock %}
